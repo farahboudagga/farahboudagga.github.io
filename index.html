@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  PORTFOLIO  -  index.html  (the structure and the texts of the page)
+  =====================================================================
+  HOW THE PROJECT IS ORGANIZED
+    index.html        -> this file: page structure + the texts (English + French)
+    css/style.css     -> all the colors, fonts and layout
+    js/config.js      -> ***YOUR DATA***: email, links, CV, images, projects, skills...
+    js/main.js        -> the behavior (animations, language switch, terminal...)
+    assets/img/       -> your photos and project screenshots
+    assets/cv/        -> your CV (PDF)
+
+  WHAT TO EDIT
+    * Email, LinkedIn, GitHub, CV file, images, projects, skills  -> js/config.js
+    * A sentence of text                                         -> here, in index.html
+        Every translated text has two versions:
+        the English text is between the tags, the French text is in  data-fr="..."
+        Example:  <p data-fr="Bonjour">Hello</p>
+    * Colors and fonts                                           -> css/style.css (top of the file)
+
+  Elements with  data-email, data-cv-link, data-linkedin-link ...  are filled
+  automatically from js/config.js, so never type your email in this file.
+  =====================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- This line makes the page responsive on phones -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Farah Boudagga | Software Engineering Student &amp; Developer</title>
+
+<!-- SEO + link preview (WhatsApp, LinkedIn...) -->
+<meta name="description" content="Farah Boudagga, software engineering student in Monastir. Secured Spring Boot APIs, React and Next.js interfaces, responsive websites with HTML, CSS and Bootstrap, a remote developer internship and WEHACK 0.0 hackathon participation.">
+<meta property="og:title" content="Farah Boudagga | Software Engineering Student &amp; Developer">
+<meta property="og:description" content="Real software, built end to end: Spring Boot, React, Next.js and responsive websites.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#C8102E">
+<link rel="icon" href="assets/img/portrait.jpg">
+
+<!-- Google Fonts (needs internet). To change the fonts, change this link AND --d in css/style.css -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- All the styles -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<!-- Accessibility: lets keyboard users jump to the content -->
+<a class="sk" href="#main">Skip to content</a>
+
+<!-- ===== Decorations: loading screen, scroll bar, particles canvas, custom cursor ===== -->
+<!-- LOADING SCREEN: calm, uses the site background. Portrait inside a thin ring that fills up,
+     then the name and the role. It fades away by itself (see js/main.js, section 13). -->
+<div id="pre" aria-hidden="true">
+  <div class="pre-ring">
+    <svg viewBox="0 0 112 112"><circle class="track" cx="56" cy="56" r="52"/><circle class="prog" cx="56" cy="56" r="52"/></svg>
+    <img class="ph" alt="" width="92" height="92">
+  </div>
+  <p class="pre-name" data-name></p>
+  <p class="pre-role" data-fr="Étudiante en génie logiciel et développeuse">Software engineering student and developer</p>
+</div>
+<div id="bar"></div>
+<canvas id="cv" aria-hidden="true"></canvas>
+<div id="cu"></div><div id="cr"></div>
+
+<!-- =====================================================================
+     NAVBAR
+     Menu links: data-fr = French label. The LinkedIn pill + preview card
+     are filled from js/config.js.
+     ===================================================================== -->
+<nav aria-label="Main"><div class="w">
+  <!-- Logo = your photo + initials -->
+  <a class="lg" href="#top" aria-label="Back to top"><img class="ph" alt="" width="34" height="34"><span data-initials></span></a>
+
+  <!-- Desktop menu -->
+  <div class="nl" id="nl">
+    <a data-s="about" href="#about" data-fr="À propos">About</a>
+    <a data-s="skills" href="#skills" data-fr="Compétences">Skills</a>
+    <a data-s="projects" href="#projects" data-fr="Projets">Projects</a>
+    <a data-s="experience" href="#experience" data-fr="Expérience">Experience</a>
+    <a data-s="community" href="#community" data-fr="Communauté">Community</a>
+    <a data-s="contact" href="#contact">Contact</a>
+    <i class="ind" id="ind"></i><!-- moving underline -->
+  </div>
+
+  <!-- LinkedIn pill + hover preview card -->
+  <div class="li" id="li">
+    <a class="lip" data-linkedin-link href="#" target="_blank" rel="noopener" aria-label="LinkedIn (opens in a new tab)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.25H3zM10 9.75h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.61h-4v-4.97c0-1.19-.02-2.71-1.65-2.71-1.65 0-1.9 1.29-1.9 2.62v5.06h-4z"/></svg>
+      <span id="lipt">LinkedIn</span><i aria-hidden="true"></i>
+    </a>
+    <div class="lic" id="lic" role="region" aria-label="LinkedIn profile preview">
+      <div class="lbn"></div>
+      <div class="lbi">
+        <div class="lbd">
+          <img class="ph cav" alt="Portrait of Farah Boudagga" width="56" height="56">
+          <div><b data-name></b><small data-fr="Monastir, Tunisie">Monastir, Tunisia</small></div>
+        </div>
+        <!-- EDIT: your LinkedIn headline + details -->
+        <p class="lhd">Computer Science Student | Exploring Science &amp; Technology Through Code &amp; Books</p>
+        <ul class="lmt"><li>Faculté des sciences Monastir</li><li data-fr="500+ relations">500+ connections</li></ul>
+        <p class="lps" data-fr="Au programme : le projet ShopFlow, les ateliers IEEE FSM, et ce que je construis.">Inside: the ShopFlow project, IEEE FSM workshops and what I’m building.</p>
+        <a class="btn" data-linkedin-link href="#" target="_blank" rel="noopener" data-fr="Voir mon profil ↗">View my profile ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons: language, theme, mobile burger (the CV button lives in the hero) -->
+  <button class="ib" id="lang" aria-label="Switch language">FR</button>
+  <button class="ib" id="th" aria-label="Toggle light or dark theme">Dark</button>
+  <button class="bgr" id="bgr" aria-label="Open menu" aria-expanded="false" aria-controls="mp"><span></span><span></span></button>
+</div>
+
+<!-- Mobile menu (opens with the burger button). The LinkedIn card is copied here by main.js -->
+<div id="mp">
+  <a class="pl" data-s="about" href="#about" data-fr="À propos">About</a>
+  <a class="pl" data-s="skills" href="#skills" data-fr="Compétences">Skills</a>
+  <a class="pl" data-s="projects" href="#projects" data-fr="Projets">Projects</a>
+  <a class="pl" data-s="experience" href="#experience" data-fr="Expérience">Experience</a>
+  <a class="pl" data-s="community" href="#community" data-fr="Communauté">Community</a>
+  <a class="pl" data-s="contact" href="#contact">Contact</a>
+</div>
+</nav>
+
+<main id="main">
+
+<!-- =====================================================================
+     HERO  -  first screen
+     The big title and the typing words come from js/config.js
+     (headline + typingWords). The badge below shows your internship.
+     ===================================================================== -->
+<header class="hero" id="top"><div class="w"><div class="g">
+  <div class="cp">
+    <h1 id="h1" aria-label="Real software, built end to end."></h1>
+    <div class="ty" aria-hidden="true"><span id="tp" data-fr="Je travaille sur">I work on</span> <b id="tw"></b><u></u></div>
+
+    <!-- EDIT: short introduction -->
+    <p data-fr="Étudiante en génie logiciel à Monastir. Je construis des API Spring Boot sécurisées, les interfaces React et Next.js qui s’appuient dessus, et des sites web responsive en HTML, CSS et Bootstrap.">Software engineering student in Monastir. I build secured Spring Boot APIs, the React and Next.js interfaces on top of them, and responsive websites with HTML, CSS and Bootstrap.</p>
+
+    <!-- Buttons. This is the ONLY CV button on the whole site; its file comes from js/config.js (cv.file) -->
+    <div class="cta">
+      <a class="btn mag" href="#projects" data-fr="Voir mes projets">See my work</a>
+      <a class="btn o mag dl" data-cv-link href="#" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg><span data-fr="Télécharger mon CV">Download my CV</span></a>
+      <a class="btn o mag" href="#contact" data-fr="Me contacter">Contact me</a>
+    </div>
+
+    <!-- EDIT: badge (internship) -->
+    <div class="bd" data-fr="Stage développeuse logiciel chez Singleton Solution, 10 semaines, à distance">Software Developer internship at Singleton Solution, 10 weeks, remote</div>
+  </div>
+
+  <!-- Your photo (portrait in config.js) + floating skill tags -->
+  <div class="sg"><div class="st" id="st"><div class="gl"></div>
+    <div class="bl" id="bl">
+      <img class="b0 ph" alt="Portrait of Farah Boudagga" width="391" height="719">
+      <img class="b1 ph" alt="" aria-hidden="true">
+    </div>
+    <span class="fc">Spring Boot</span><span class="fc">React</span><span class="fc">Bootstrap</span>
+  </div></div>
+</div></div></header>
+
+<!-- =====================================================================
+     01  ABOUT
+     ===================================================================== -->
+<section id="about"><div class="w">
+  <div class="sh rv"><p class="lb"><span>01</span> — <i style="font-style:normal" data-fr="À propos">About</i></p><h2 data-fr="Du modèle de données jusqu’à l’écran.">From the data model to the screen.</h2></div>
+  <div class="g">
+    <figure class="af rv"><img class="ph" alt="Farah Boudagga, black and white portrait that turns to color on hover" data-p=".05"><span>Monastir, Tunisia</span></figure>
+    <div class="at rv">
+      <!-- EDIT: your presentation paragraphs -->
+      <p data-fr="Je suis en troisième année de Licence en Génie Logiciel et Systèmes d’Information à la Faculté des Sciences de Monastir. J’ai construit deux projets full-stack autour de l’authentification JWT et du contrôle d’accès par rôles.">I’m a third-year Licence student in Software Engineering and Information Systems at the Faculté des Sciences de Monastir. I built two full-stack projects around JWT authentication and role-based access.</p>
+      <p data-fr="J’ai aussi effectué un stage de dix semaines à distance dans un code existant : frontend, tests en local et en production, débogage, intégration et validation.">I also completed a ten-week remote internship inside an existing codebase: frontend work, local and production testing, debugging, integration and validation.</p>
+      <p data-fr="Je crée aussi des sites web responsive avec HTML, CSS et Bootstrap, qui s’affichent correctement sur téléphone, tablette et ordinateur.">I also create responsive websites with HTML, CSS and Bootstrap that look right on a phone, a tablet and a computer.</p>
+      <div class="chs">
+        <span class="ch" data-fr="Arabe, langue maternelle">Arabic, native</span>
+        <span class="ch" data-fr="Français B1">French B1</span>
+        <span class="ch" data-fr="Anglais B1">English B1</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =====================================================================
+     02  SKILLS
+     - Numbers: the list "stats" in js/config.js
+     - Scrolling banner: the list "skills" in js/config.js
+     ===================================================================== -->
+<section id="skills">
+  <div class="w">
+    <div class="sh rv"><p class="lb"><span>02</span> — <i style="font-style:normal" data-fr="Compétences">Skills</i></p><h2 data-fr="Ce que j’utilise.">What I work with.</h2></div>
+
+    <!-- Animated numbers (filled by main.js from CONFIG.stats) -->
+    <div class="nums rv" id="stats"></div>
+
+    <!-- NEW: Responsive web design card -->
+    <div class="rw rv" id="responsive">
+      <div>
+        <p class="lb" data-fr="Sites web responsive">Responsive web design</p>
+        <h3 data-fr="Des sites web qui s’adaptent à tous les écrans.">Websites that adapt to every screen.</h3>
+        <p data-fr="Je crée des sites web responsive avec HTML5, CSS3 et Bootstrap : des mises en page mobile-first, des grilles flexibles et un code propre, qui s’affichent bien sur téléphone, tablette et ordinateur. Ce portfolio est lui-même entièrement responsive.">I build responsive websites with HTML5, CSS3 and Bootstrap: mobile-first layouts, flexible grids and clean code that look right on a phone, a tablet and a desktop. This portfolio is fully responsive too.</p>
+        <!-- EDIT: tags of this card -->
+        <div class="chs">
+          <span class="ch">HTML5</span>
+          <span class="ch">CSS3</span>
+          <span class="ch">Bootstrap</span>
+          <span class="ch">Mobile-first</span>
+          <span class="ch">Flexbox &amp; Grid</span>
+          <span class="ch">Media queries</span>
+        </div>
+        <a class="btn o mag" href="#contact" data-fr="Parlons de votre site">Let’s talk about your website</a>
+      </div>
+      <!-- Drawing: desktop + tablet + phone (pure SVG, no image file needed) -->
+      <svg class="devs" viewBox="0 0 380 200" role="img" aria-label="A desktop screen, a tablet and a phone showing the same page">
+        <!-- Desktop -->
+        <rect class="frame" x="10" y="14" width="212" height="140" rx="10"/>
+        <rect class="hot"  x="22" y="26" width="188" height="10" rx="3"/>
+        <rect class="blk"  x="22" y="44" width="112" height="98" rx="4"/>
+        <rect class="blk"  x="142" y="44" width="68" height="44" rx="4"/>
+        <rect class="blk"  x="142" y="98" width="68" height="44" rx="4"/>
+        <path class="stand" d="M116 154v22M86 178h60"/>
+        <!-- Tablet -->
+        <rect class="frame" x="238" y="66" width="80" height="100" rx="9"/>
+        <rect class="hot"  x="247" y="76" width="62" height="8" rx="3"/>
+        <rect class="blk"  x="247" y="92" width="62" height="30" rx="4"/>
+        <rect class="blk"  x="247" y="128" width="62" height="28" rx="4"/>
+        <!-- Phone -->
+        <rect class="frame" x="330" y="104" width="42" height="62" rx="8"/>
+        <rect class="hot"  x="336" y="111" width="30" height="6" rx="2"/>
+        <rect class="blk"  x="336" y="122" width="30" height="16" rx="3"/>
+        <rect class="blk"  x="336" y="143" width="30" height="16" rx="3"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Two scrolling banners (filled by main.js from CONFIG.skills) -->
+  <div class="mq" aria-label="Skills"><div class="mt" id="m1"></div></div>
+  <div class="mq" aria-hidden="true"><div class="mt" id="m2"></div></div>
+</section>
+
+<!-- =====================================================================
+     03  PROJECTS  -  the cards are built from CONFIG.projects (js/config.js)
+     ===================================================================== -->
+<section id="projects"><div class="w">
+  <div class="sh rv"><p class="lb"><span>03</span> — <i style="font-style:normal" data-fr="Projets">Projects</i></p><h2 data-fr="Trois projets full-stack.">Three full-stack projects.</h2></div>
+  <div class="g pg" id="pg"></div>
+</div></section>
+
+<!-- =====================================================================
+     04  EXPERIENCE  -  internship card (texts here) + tabs (CONFIG.experience)
+     ===================================================================== -->
+<section id="experience"><div class="w">
+  <div class="sh rv"><p class="lb"><span>04</span> — <i style="font-style:normal" data-fr="Expérience">Experience</i></p><h2 data-fr="Dans un vrai code de production.">Inside a real codebase.</h2></div>
+  <div class="g xe">
+    <!-- Left card: company, duration, scope -->
+    <div class="xl rv">
+      <p class="mu xk" data-fr="Stagiaire développeuse logiciel">Software Developer Intern</p>
+      <h3>Singleton Solution</h3>
+      <div class="chs">
+        <span class="ch" data-fr="À distance">Remote</span>
+        <span class="ch" data-fr="10 semaines">10 weeks</span>
+        <span class="ch" data-fr="Depuis le 18 juillet 2026">From 18 July 2026</span>
+      </div>
+      <p data-fr="Frontend du dashboard Dowell, une composante d’une grande plateforme multi-applications, dans un code existant et un environnement de développement professionnel.">Frontend of the Dowell dashboard, one part of a large multi-application platform, inside an existing codebase and a professional development environment.</p>
+      <!-- 10 bars = 10 weeks -->
+      <div class="wk2" role="img" aria-label="10 weeks"><div class="wb">
+        <i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i>
+        <i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i style="--k:9"></i>
+      </div><div class="wl"><span data-fr="Semaine 1">Week 1</span><span data-fr="Semaine 10">Week 10</span></div></div>
+      <!-- Small diagram -->
+      <svg class="map" id="xmap" data-a="0" viewBox="0 0 360 230" role="img" aria-label="Diagram: the Dowell dashboard connected to the rest of the platform">
+        <g class="lns"><path d="M120 92 L62 52"/><path d="M240 92 L298 52"/><path d="M180 140 L180 184"/></g>
+        <g class="nd"><rect x="12" y="14" width="104" height="44" rx="12"/><rect x="244" y="14" width="104" height="44" rx="12"/><rect x="128" y="184" width="104" height="36" rx="12"/></g>
+        <g class="nt"><text x="64" y="40">Other apps</text><text x="296" y="40">Other apps</text><text x="180" y="207">Backend services</text></g>
+        <rect class="hub" x="108" y="84" width="144" height="60" rx="16"/><text class="ht" x="180" y="119">Dowell dashboard</text>
+      </svg>
+      <p class="mu cpn" data-fr="Mon périmètre : le frontend du dashboard, intégré au reste de la plateforme.">My scope: the dashboard frontend, integrated with the rest of the platform.</p>
+    </div>
+    <!-- Right: tabs (filled by main.js) + placeholder for visuals -->
+    <div class="xr rv">
+      <div class="xt" id="xt" role="tablist" aria-label="What I worked on"></div>
+      <div class="vz" aria-label="Placeholder for project visuals">
+        <div class="vw" aria-hidden="true"><b></b><i></i><i></i><i></i><i></i></div>
+        <p data-fr="Les visuels du projet seront ajoutés après validation de l’entreprise. Maquette illustrative, pas l’interface réelle.">Project visuals will be added once the company approves them. Illustrative wireframe, not the real interface.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =====================================================================
+     05  COMMUNITY  -  hackathon + workshop (CONFIG.community in js/config.js)
+     ===================================================================== -->
+<section id="community"><div class="w">
+  <div class="sh rv"><p class="lb"><span>05</span> — <i style="font-style:normal" data-fr="Communauté">Community</i></p><h2 data-fr="Hackathon et ateliers.">Hackathon and workshops.</h2></div>
+  <div class="g cm">
+    <div class="tb rv" role="tablist" aria-label="Activities" id="ctabs"></div>
+    <div class="dw rv">
+      <!-- Rotating round text -->
+      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="sp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#sp" id="sealt" textLength="284" lengthAdjust="spacing"></textPath></text><circle cx="60" cy="60" r="5" fill="var(--ac)"/></svg></div>
+      <!-- Photo deck -->
+      <div class="dk" id="dk" tabindex="0" aria-label="Photo deck. Click, swipe or use the arrow keys."></div>
+      <div class="ctl">
+        <button class="rb" id="pvb" aria-label="Previous photo">←</button>
+        <button class="rb" id="nxb" aria-label="Next photo">→</button>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+        <p class="cap" id="cap" aria-live="polite"></p>
+        <button class="zm" id="zm" data-fr="Voir en grand">View full size</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =====================================================================
+     06  CONTACT
+     Email, LinkedIn, GitHub and CV are filled from js/config.js
+     ===================================================================== -->
+<section id="contact"><div class="w">
+  <div class="sh rv"><p class="lb"><span>06</span> — Contact</p><h2 data-fr="Construisons quelque chose de significatif.">Let’s build something meaningful.</h2></div>
+  <div class="g cg">
+    <div class="ci rv">
+      <p class="av" data-fr="Ouverte aux stages et aux opportunités en développement logiciel.">Open to internships and software development opportunities.</p>
+
+      <!-- Email card -->
+      <div class="em">
+        <small class="mu">E-mail</small>
+        <a data-email-link data-email href="#"></a>
+        <button class="ib" id="cp" type="button" data-fr="Copier l’adresse">Copy address</button>
+      </div>
+
+      <!-- LinkedIn -->
+      <a class="sc2" data-linkedin-link href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.25H3zM10 9.75h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.61h-4v-4.97c0-1.19-.02-2.71-1.65-2.71-1.65 0-1.9 1.29-1.9 2.62v5.06h-4z"/></svg>
+        <span>LinkedIn<small data-linkedin-handle></small></span><i aria-hidden="true">↗</i>
+      </a>
+
+      <!-- GitHub -->
+      <a class="sc2" data-github-link href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span>GitHub<small data-github-handle></small></span><i aria-hidden="true">↗</i>
+      </a>
+
+    </div>
+
+    <!-- Contact form: opens the visitor's email app with the message ready (mailto) -->
+    <form id="fm" class="fm rv">
+      <div class="tp" role="radiogroup" aria-labelledby="tpl">
+        <p class="lb2" id="tpl" data-fr="De quoi s’agit-il ?">What is this about?</p>
+        <div class="tr">
+          <label><input type="radio" name="tp" value="Internship opportunity" checked><span data-fr="Stage ou emploi">Internship or job</span></label>
+          <label><input type="radio" name="tp" value="Website project"><span data-fr="Site web">Website project</span></label>
+          <label><input type="radio" name="tp" value="Project"><span data-fr="Projet">Project</span></label>
+          <label><input type="radio" name="tp" value="Hello"><span data-fr="Simple bonjour">Just saying hello</span></label>
+        </div>
+      </div>
+      <div class="fl"><input id="fn" required placeholder=" " autocomplete="name"><label for="fn" data-fr="Votre nom">Your name</label></div>
+      <div class="fl f"><textarea id="fq" required maxlength="600" placeholder=" "></textarea><label for="fq" data-fr="Votre message">Your message</label><span class="cn" id="cn">0 / 600</span></div>
+      <div class="fa">
+        <button class="btn mag" id="fs" data-fr="Envoyer par e-mail">Send by email</button>
+        <p class="mu" data-fr="Ouvre votre messagerie avec le message prêt à envoyer.">Opens your email app with the message ready to send.</p>
+      </div>
+    </form>
+  </div>
+</div></section>
+
+<!-- Full-size photo viewer (opened by "View full size") -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Full-size photo"><button id="lbx" aria-label="Close">×</button><img id="lbi" alt=""><p id="lbc" style="margin:0"></p></div>
+</main>
+
+<!-- =====================================================================
+     FOOTER
+     ===================================================================== -->
+<footer><div class="w"><span data-name></span>, <span data-year></span>. <span data-fr="Astuce : appuyez sur / pour ouvrir le terminal.">Tip: press / to open the terminal.</span></div></footer>
+
+<!-- Little terminal (bottom right). Its answers are in js/main.js, section 9 -->
+<button class="btn" id="tb" aria-expanded="false" aria-controls="tm">&gt;_ terminal</button>
+<div id="tm" role="dialog" aria-label="Terminal">
+  <div class="th"><i></i><i></i><i></i><span>farah@portfolio</span></div>
+  <div id="tl" aria-live="polite"></div>
+  <form id="tf"><label for="ti">$</label><input id="ti" autocomplete="off" spellcheck="false" aria-label="Command"></form>
+</div>
+
+<!-- SCRIPTS: config first (your data), then main (the behavior). Keep this order. -->
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
